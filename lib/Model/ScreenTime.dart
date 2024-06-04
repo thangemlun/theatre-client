@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:learning_flutter/core/utils/typedef.dart';
 
 class ScreenTime {
