@@ -4,7 +4,7 @@ import 'dart:ffi';
 import 'package:learning_flutter/core/utils/typedef.dart';
 
 class Cinema {
-  final Long id;
+  final int id;
   final String name;
   final String slug;
   final String city;
@@ -16,12 +16,12 @@ class Cinema {
   factory Cinema.fromJson(String source) => Cinema.fromMap(jsonDecode(source) as DataMap);
 
   Cinema.fromMap(DataMap dataMap) : this (
-    id : dataMap['id'] as Long,
-    name : dataMap['name'] as String,
-    slug : dataMap['slug'] as String,
-    city : dataMap['city'] as String,
-    image : dataMap['image'] as String,
-    address : dataMap['address'] as String,
+    id : dataMap["id"],
+    name : dataMap["name"] != null ? dataMap["name"] : "",
+    slug : dataMap["slug"] != null ? dataMap["slug"] : "",
+    city : dataMap["city"] != null ? dataMap["city"] : "",
+    image : dataMap["image"] != null ? dataMap["image"] : "",
+    address : dataMap["address"] != null ? dataMap["address"] : "",
   );
   
   DataMap toMap() => {
