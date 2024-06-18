@@ -43,23 +43,23 @@ class ScheduleChannelPageState extends State<ScheduleChannelPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return FutureBuilder(future: getSchedules(), builder: (context, snapShot) {
-      return Container(
+      return schedules.isNotEmpty ? Container(
             height: MediaQuery.of(context).size.height,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
+              padding: const EdgeInsets.only(right: 100),
               child: ListView.builder(
                   shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: schedules.length > 0 ? schedules.length : 0 ,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: schedules.isNotEmpty ? schedules.length : 0 ,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
-                    return (schedules.length > 0) ?
+                    return (schedules.isNotEmpty) ?
                     getContentSchedule(schedules[index]) :
-                    CircularProgressIndicator();
+                    const CircularProgressIndicator();
                   }
               ),
             )
-        );
+        ) : const CircularProgressIndicator();
     });
   }
 

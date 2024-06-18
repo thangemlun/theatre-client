@@ -41,7 +41,7 @@ class _TVShowSectionState extends State<TVShowSection> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: 250,
-            child: !(channels != null && channels.length > 0)
+            child: !(channels.isNotEmpty)
                 ? const Center(
               child: CircularProgressIndicator(
                 color: Colors.amber,
@@ -82,7 +82,7 @@ class ChannelPoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8.0), // Margin for spacing between posters
+      margin: const EdgeInsets.all(8.0), // Margin for spacing between posters
       width: 200,
       height: 200,
       child: Stack(
@@ -94,8 +94,9 @@ class ChannelPoster extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return Dialog(
+                      backgroundColor: Colors.black12,
                       child: Container(
-                        width: 1000,
+                        width: 800,
                         child: Scaffold(
                             body: Stack(
                               children: [
@@ -164,7 +165,7 @@ class ChannelPoster extends StatelessWidget {
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.only(right: 50, top: 180),
+                                                margin: const EdgeInsets.only(right: 50, top: 180),
                                                 height: 80,
                                                 width: 80,
                                                 decoration: BoxDecoration(
