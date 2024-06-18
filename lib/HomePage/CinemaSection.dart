@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Model/Movie.dart';
 
@@ -56,11 +57,9 @@ class _CinemaSectionState extends State<CinemaSection> {
                         physics: BouncingScrollPhysics(),
                         controller: _scrollController,
                         scrollDirection: Axis.horizontal,
-                        children: movieList
-                            .map((e) {
-                              return MoviePoster(movie: e);
-                            })
-                            .toList()),
+                        children: movieList.map((e) {
+                          return MoviePoster(movie: e);
+                        }).toList()),
                   ),
           ),
           const SizedBox(
@@ -87,77 +86,150 @@ class MoviePoster extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               showDialog(
                   context: context,
                   builder: (context) {
-                return Dialog(
-                  child: Container(
-                    child: Scaffold(
-                      body: CustomScrollView(
-                        slivers: [
-                          SliverAppBar(
-                            centerTitle: true,
-                            excludeHeaderSemantics: true,
-                            expandedHeight: MediaQuery.of(context).size.height,
-                            flexibleSpace: FlexibleSpaceBar(
-                              collapseMode: CollapseMode.parallax,
-                              background: Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  // gradient: LinearGradient(colors: [Color()]),
-                                  color: Colors.white,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.black.withOpacity(0.7),
-                                    ],
-                                    stops: [0.5, 1.0],
-                                  ),
-                                  image: DecorationImage(
-                                      alignment: Alignment.center,
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.3),
-                                          BlendMode.darken),
-                                      image: NetworkImage(movie.poster),
-                                      filterQuality: FilterQuality.high,
-                                      fit: BoxFit.fill,
-                                      matchTextDirection: true),
+                    return Dialog(
+                      child: Container(
+                        width: 700,
+                        child: Scaffold(
+                            body: Stack(
+                          children: [
+                            Opacity(
+                              opacity: 0.2,
+                              child: Image.network(
+                                movie.poster,
+                                height: 400,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: SafeArea(
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 25),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Icon(
+                                              Icons.arrow_back,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 120,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black12
+                                                        .withOpacity(0.5),
+                                                    blurRadius: 8,
+                                                  )
+                                                ]),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Image.network(
+                                                movie.poster,
+                                                height: 200,
+                                                width: 180,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(right: 50, top: 180),
+                                            height: 80,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                                color: Colors.amber.withOpacity(0.8),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.amber
+                                                        .withOpacity(0.8),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 8,
+                                                  )
+                                                ]),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                launchUrl(Uri.parse(movie.trailer));
+                                              },
+                                              child: Icon(Icons.play_arrow,
+                                              color: Colors.white.withOpacity(0.8),
+                                              size: 60,),
+                                            ),
+
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 30,),
+                                    // Movie detail goes here
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(movie.name,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w500,
+                                        ),),
+                                        const SizedBox(height: 20,),
+                                        Text(movie.seo_description,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),),
+                                        const SizedBox(height: 20,),
+                                        Row(
+                                          children: [
+                                            Text("Thời lượng : ${movie.duration}",
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                              ),),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    )
+
+                                  ],
                                 ),
                               ),
-                            ),
-                            title: Text(movie.name, style: const TextStyle(
-                              fontWeight: FontWeight.bold
-                            ),),
-                          ),
-                          SliverList(delegate: SliverChildListDelegate([
-                            SizedBox(height: 20,),
-                            Container(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(width: 20,),
-                                      Text("Ngày ra mắt : "
-                                          "${movie.releaseDate.day}-${movie.releaseDate.month}-${movie.releaseDate.year}"),
-                                      SizedBox(width: 20,),
-                                      Text("Thời lượng : ${movie.duration}")
-                                    ],
-                                  ), SizedBox(height: 20,)
-                                  , Text("Nội dung : ${movie.seo_description}"), SizedBox(height: 20,)
-                                ]
-                              ),
-                            ),
-                          ]))
-                        ],
-                      )
-                    ),
-                  ),
-                );
-              });
+                            )
+                          ],
+                        )),
+                      ),
+                    );
+                  });
             },
             child: Container(
               decoration: BoxDecoration(

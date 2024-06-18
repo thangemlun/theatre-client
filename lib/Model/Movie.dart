@@ -18,6 +18,7 @@ class Movie {
   late String imdb;
   late String release;
   late DateTime releaseDate;
+  late String trailer;
 
   Movie(
       this.id,
@@ -31,7 +32,8 @@ class Movie {
       this.imdb,
       this.release,
       this.releaseDate,
-      this.seo_description);
+      this.seo_description,
+      this.trailer);
 
   factory Movie.fromJson(String source) =>
       Movie.fromMap(jsonDecode(source) as DataMap);
@@ -51,5 +53,6 @@ class Movie {
             dataMap["releaseDate"] != null ?
             DateTime.fromMillisecondsSinceEpoch(dataMap["releaseDate"], isUtc: true) :
             DateTime.now(),
-            dataMap["seo_description"] ?? "");
+            dataMap["seo_description"] ?? "",
+            dataMap["trailer"] ?? "");
 }

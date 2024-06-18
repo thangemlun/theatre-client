@@ -7,6 +7,9 @@ import 'package:learning_flutter/HomePage/CinemaSection.dart';
 import 'package:learning_flutter/Model/Movie.dart';
 import 'package:learning_flutter/core/utils/constant.dart';
 
+import '../Model/Channel.dart';
+import 'TVShowSection.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -16,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   late List<Movie> newestMovies = [];
+  late List<Channel> channels = [];
   final List<String> movieTypes = ["Cinema", "Television"];
 
   String selectedType = "Cinema";
@@ -25,7 +29,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       case "Cinema":
         {
           var movieResp =
-              await http.get(Uri.parse(THEATRE_HOST + GET_TRENDING_MOVIES));
+              await http.get(Uri.parse(HOST + GET_TRENDING_MOVIES));
           if (movieResp.statusCode == 200) {
             try {
               List<dynamic> tempData = jsonDecode(movieResp.body);
@@ -39,6 +43,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           }
           break;
         }
+      case "Television" : {
+          try {
+            var channelResp =
+            await http.get(Uri.parse(HOST + GET_TV_SHOW_CHANNELS));
+            List<dynamic> tempData = jsonDecode(channelResp.body);
+            if (channelResp.statusCode == 200) {
+              channels = tempData.map((e) {
+                var dataMap = e;
+                return Channel.fromMap(dataMap);
+              }).toList();
+            }
+          } catch(e) {
+            print(e);
+          }
+        break;
+      }
     }
   }
 
@@ -157,7 +177,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               padding: const EdgeInsets.symmetric(horizontal: 40),
               width: MediaQuery.of(context).size.width,
               child:
-              selectedType == "Cinema" && (newestMovies.length > 0) ? CinemaSection(movies: newestMovies) : Text(selectedType),
+              selectedType == "Cinema" && (newestMovies.length > 0) ?
+              CinemaSection(movies: newestMovies) :
+              selectedType == "Television" &&  (channels.length > 0)
+              ? TVShowSection(channels: channels) :
+              Text("No data"),
             )
           ]),
         ),
