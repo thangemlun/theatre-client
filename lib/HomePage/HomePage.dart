@@ -4,10 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_flutter/HomePage/CinemaSection.dart';
-import 'package:learning_flutter/Model/Movie.dart';
+import 'package:learning_flutter/core/utils/AppCache.dart';
 import 'package:learning_flutter/core/utils/constant.dart';
 
 import '../Model/Channel.dart';
+import '../Model/City.dart';
 import '../Model/MovieV2.dart';
 import 'TVShowSection.dart';
 
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
-  late List<Movie> newestMovies = [];
+  late List<City> cities = [];
   late List<MovieV2> upComingMovies = [];
   late List<MovieV2> onScreenMovies = [];
   late List<Channel> channels = [];
@@ -81,6 +82,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   void initState() {
     // TODO: implement initState
+    getDataCities();
+  }
+
+  Future<void> getDataCities() async {
+    var cityResp =
+        await http.get(Uri.parse(HOST + GET_ALL_CITIES));
+    if (cityResp.statusCode == 200) {
+      try {
+        List<dynamic> tempData = jsonDecode(cityResp.body);
+        cities = tempData.map((e) {
+          var dataMap = e;
+          return City.fromMap(dataMap);
+        }).toList();
+        AppCache.cities = cities;
+      } catch(e) {
+        print(e);
+      }
+    }
   }
 
   @override

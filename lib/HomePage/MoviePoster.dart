@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/HomePage/MovieDetail.dart';
+import 'package:learning_flutter/HomePage/ScheduleMoviePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Model/MovieV2.dart';
@@ -25,7 +28,7 @@ class MoviePoster extends StatelessWidget {
                   builder: (context) {
                     return Dialog(
                       child: Container(
-                        width: 700,
+                        width: 1000,
                         child: Scaffold(
                             body: Stack(
                               children: [
@@ -134,14 +137,10 @@ class MoviePoster extends StatelessWidget {
                                                   fontSize: 30,
                                                   fontWeight: FontWeight.w500,
                                                 ),),
+                                              MovieDetail(movie: movie),
                                               const SizedBox(height: 20,),
-                                              Text(movie.synopsis,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                ),),
-                                              const SizedBox(height: 20,),
-                                              MovieDetail(movie: movie)
+                                              Divider(height: 20,thickness: 2.0, color: Colors.amber),
+                                              ScheduleMoviePage(movie: movie)
                                             ],
                                           ),
                                         )
