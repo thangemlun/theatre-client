@@ -31,13 +31,13 @@ class CinemaV2{
 
   CinemaV2.fromMap(DataMap dataMap)
       : this(
-      dataMap["cityName"] ?? 0,
+      dataMap["cityName"] ?? "",
       dataMap["name"] ?? "",
       dataMap["address"] ?? "",
       dataMap["avatar"] ?? "",
-      dataMap["logo"] ?? 0,
-      dataMap["ratingCount"] ?? "",
-      dataMap["ratingValue"] ?? "",
+      dataMap["logo"] ?? "",
+      dataMap["ratingCount"] ?? 0,
+      dataMap["ratingValue"] ?? 0.0,
       getMapSchedule(dataMap["schedules"]),
       false
   );

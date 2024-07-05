@@ -43,7 +43,7 @@ class UpComingMovies extends StatelessWidget {
                 controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 children: movies.map((e) {
-                  return MoviePoster(movie: e);
+                  return MoviePoster(movie: e, type: "Upcoming",);
                 }).toList()),
           ),
         ),

@@ -20,6 +20,7 @@ class MovieV2 {
   late String synopsisEn;
   late String titleEn;
   late String trailerUrl;
+  late double imdbPoint;
 
   MovieV2(
       this.id,
@@ -37,7 +38,8 @@ class MovieV2 {
       this.synopsis,
       this.synopsisEn,
       this.titleEn,
-      this.trailerUrl);
+      this.trailerUrl,
+      this.imdbPoint);
 
   factory MovieV2.fromJson(String source) =>
       MovieV2.fromMap(jsonDecode(source) as DataMap);
@@ -59,7 +61,8 @@ class MovieV2 {
       dataMap["synopsis"] ?? "",
       dataMap["synopsisEn"] ?? "",
       dataMap["titleEn"] ?? "",
-      dataMap["trailerUrl"] ?? ""
+      dataMap["trailerUrl"] ?? "",
+      dataMap["imdbPoint"] ?? 0.0
   );
 
 }

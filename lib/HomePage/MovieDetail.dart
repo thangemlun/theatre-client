@@ -41,6 +41,8 @@ class MovieDetail extends StatelessWidget{
               SizedBox(width: 30,),
               ColumnDetail(itemType: "Công nghệ", itemContent: movie.apiFilmType),
               SizedBox(width: 30,),
+              ColumnDetail(itemType: "Imdb rating", itemContent: '${movie.imdbPoint}'),
+              SizedBox(width: 30,),
             ],
         ),
         SizedBox(height: 30,),
@@ -61,7 +63,7 @@ class MovieDetail extends StatelessWidget{
   }
 
   String getDateScreen(String date) {
-    DateFormat format = DateFormat("yyyy-MM-dd hh:mm:ss");
+    DateFormat format = DateFormat("yyyy-MM-dd");
     DateTime time = format.parse(date);
     return '${time.day}/${time.month}/${time.year}';
   }
@@ -83,11 +85,11 @@ class ColumnDetail extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(itemType, style: TextStyle(
+        Text(itemType, style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w100
         ),),
-        Text(itemContent, style: TextStyle(
+        Text(itemContent, style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500
         ),)

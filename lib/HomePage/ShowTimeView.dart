@@ -67,7 +67,7 @@ class ShowTimeViewState extends State<ShowTimeView> {
   Widget showTimeDetail(ScheduleV2 showTime) {
     return InkWell(
       child: Container(
-          width: 100,
+          width: 120,
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
               color: Colors.white24,
@@ -79,7 +79,7 @@ class ShowTimeViewState extends State<ShowTimeView> {
             children: [
               Text(
                   showTime.showTimeDuration,
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
               )
             ],
           )),

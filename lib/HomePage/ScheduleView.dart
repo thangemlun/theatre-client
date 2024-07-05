@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learning_flutter/HomePage/ShowTimeView.dart';
 import 'package:learning_flutter/Model/CinemaV2.dart';
 
@@ -60,7 +61,8 @@ class ScheduleViewState extends State<ScheduleView> {
       child: Wrap(children: [
         Row(
           children: [
-            Image.network(
+            cinemaV2.logo.contains(".svg") ?
+            SvgPicture.network(cinemaV2.logo) : Image.network(
               cinemaV2.logo,
               width: 40,
               height: 30,

@@ -45,7 +45,7 @@ class OnScreenMovies extends StatelessWidget {
                 controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 children: movies.map((e) {
-                  return MoviePoster(movie: e);
+                  return MoviePoster(movie: e, type: "Onscreen",);
                 }).toList()),
           ),
         ),

@@ -9,8 +9,9 @@ import '../Model/MovieV2.dart';
 
 class MoviePoster extends StatelessWidget {
   final MovieV2 movie;
+  final String type;
 
-  const MoviePoster({super.key, required this.movie});
+  const MoviePoster({super.key, required this.movie, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -131,16 +132,18 @@ class MoviePoster extends StatelessWidget {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
+                                              SizedBox(height: 20,),
                                               Text(movie.title,
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 30,
                                                   fontWeight: FontWeight.w500,
                                                 ),),
+                                              SizedBox(height: 20,),
                                               MovieDetail(movie: movie),
                                               const SizedBox(height: 20,),
-                                              Divider(height: 20,thickness: 2.0, color: Colors.amber),
-                                              ScheduleMoviePage(movie: movie)
+                                              type == "Upcoming" ? SizedBox(height: 5,) : Divider(height: 20,thickness: 2.0, color: Colors.amber),
+                                              type == "Upcoming" ? SizedBox(height: 5,) : ScheduleMoviePage(movie: movie)
                                             ],
                                           ),
                                         )
@@ -170,7 +173,7 @@ class MoviePoster extends StatelessWidget {
                 image: DecorationImage(
                   image: NetworkImage(movie.graphicUrl),
                   fit: BoxFit.fill,
-                  opacity: 0.5
+                  opacity: 0.6
                 ),
               ),
             ),
