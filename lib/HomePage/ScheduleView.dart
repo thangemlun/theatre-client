@@ -18,6 +18,12 @@ class ScheduleViewState extends State<ScheduleView> {
   late List<CinemaV2> cinemas;
   late ScrollController cinemaScroller;
 
+
+  @override
+  void didUpdateWidget(ScheduleView oldWidget) {
+    cinemas = widget.cinemas;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
